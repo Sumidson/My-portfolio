@@ -16,25 +16,56 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
+    const sectionIds = [
+      "home",
+      "about",
+      "projects",
+      "services",
+      "skills",
+      "experience",
+      "contact",
+    ];
+    let scrollTicking = false;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
-      const sections = ["home", "about", "projects", "services", "skills", "experience", "contact"];
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && el.getBoundingClientRect().top <= 120) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 60);
+        scrollTicking = false;
+      });
     };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) {
+          setActiveSection(visible[0].target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.1, 0.25] }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-        scrolled ? "py-4 glass-strong" : "py-6 bg-transparent"
+        scrolled ? "py-4 glass" : "py-6 bg-transparent"
       }`}
       style={{ transitionTimingFunction: "var(--ease-out-expo)" }}
     >

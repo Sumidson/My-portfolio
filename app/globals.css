@@ -82,12 +82,12 @@ a, button, input, textarea, select, [role="button"] {
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
+  will-change: transform;
   transition: width 0.4s var(--ease-out-expo),
               height 0.4s var(--ease-out-expo),
               border-color 0.3s ease,
               background 0.3s ease,
               opacity 0.3s ease;
-  transform: translate(-50%, -50%);
   mix-blend-mode: difference;
 }
 
@@ -111,13 +111,12 @@ a, button, input, textarea, select, [role="button"] {
   border-radius: 50%;
   pointer-events: none;
   z-index: 10000;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.3s ease, transform 0.3s var(--ease-out-expo);
+  will-change: transform, opacity;
+  transition: opacity 0.3s ease;
 }
 
 .custom-cursor-dot.hovering {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0);
 }
 
 /* ===== SCROLLBAR ===== */
@@ -189,6 +188,26 @@ a, button, input, textarea, select, [role="button"] {
   to { transform: rotate(360deg); }
 }
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes blob-drift-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(60px, -40px, 0) scale(1.08); }
+}
+
+@keyframes blob-drift-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-50px, 40px, 0) scale(1.05); }
+}
+
+@keyframes blob-drift-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(70px, -50px, 0) scale(1.1); }
+}
+
 /* ===== ANIMATION UTILITIES ===== */
 .animate-fade-in-up { animation: fadeInUp 0.8s var(--ease-out-expo) forwards; }
 .animate-fade-in-down { animation: fadeInDown 0.8s var(--ease-out-expo) forwards; }
@@ -223,9 +242,55 @@ a, button, input, textarea, select, [role="button"] {
 /* ===== GLASS ===== */
 .glass {
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+.animated-bg {
+  isolation: isolate;
+}
+
+.animated-bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  contain: layout style paint;
+}
+
+.animated-bg-blob-1 {
+  width: min(50vw, 640px);
+  height: min(50vw, 640px);
+  opacity: 0.05;
+  background: radial-gradient(circle, var(--blob-color, var(--accent)) 0%, transparent 70%);
+  filter: blur(60px);
+  top: -15%;
+  right: -8%;
+  animation: blob-drift-1 24s ease-in-out infinite;
+}
+
+.animated-bg-blob-2 {
+  width: min(42vw, 560px);
+  height: min(42vw, 560px);
+  opacity: 0.035;
+  background: radial-gradient(circle, #ff3366 0%, transparent 70%);
+  filter: blur(70px);
+  bottom: -12%;
+  left: -8%;
+  animation: blob-drift-2 28s ease-in-out infinite;
+}
+
+.animated-bg-blob-3 {
+  width: min(28vw, 360px);
+  height: min(28vw, 360px);
+  opacity: 0.04;
+  background: radial-gradient(circle, #00e5ff 0%, transparent 70%);
+  filter: blur(50px);
+  top: 45%;
+  left: 45%;
+  animation: blob-drift-3 22s ease-in-out infinite;
 }
 
 /* ===== ACCENT TEXT ===== */
@@ -312,6 +377,8 @@ a, button, input, textarea, select, [role="button"] {
 .section {
   padding: var(--section-padding) 0;
   position: relative;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
 .section-title {
@@ -403,6 +470,24 @@ a, button, input, textarea, select, [role="button"] {
 }
 
 /* ===== RESPONSIVE ===== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animated-bg-blob {
+    animation: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   body { cursor: auto; }
   a, button, input, textarea, select, [role="button"] { cursor: auto; }
