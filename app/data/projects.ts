@@ -20,7 +20,7 @@ export const projects: Project[] = [
     description: "Developed and maintained responsive web applications using React, Next.js, and Tailwind CSS.",
     tags: ["React", "Next.js", "Tailwind"],
     color: "#00E5FF",
-    image: "/Eleven X.png",
+    image: "/eleven-x.png",
     details: [
       "Developed and maintained responsive web applications using modern Frontend technologies such as React, NEXT and Tailwind CSS.",
       "Built reusable UI components to improve development efficiency and consistency across the platform.",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     description: "A comprehensive platform dedicated to supporting and providing resources for migrants.",
     tags: ["React", "Node.js"],
     color: "#FF9900",
-    image: "/Migrant Care.png",
+    image: "/migrant-care.png",
     details: [
       "Designed and developed an intuitive dashboard for migrants to find verified local resources.",
       "Implemented a secure user system with location-based filtering for shelters, jobs, and legal aid.",
@@ -71,7 +71,7 @@ export const projects: Project[] = [
     description: "Cloud-native hostel management system with AWS serverless backend.",
     tags: ["Next.js", "AWS Lambda", "DynamoDB", "SNS", "Cognito", "Amplify"],
     color: "#CCFF00",
-    image: "/Hostel Desk.png",
+    image: "/hostel-desk.png",
     details: [
       "Developed a cloud-native hostel management system using Next.js and AWS services for scalability.",
       "Implemented serverless backend using AWS Lambda, enabling efficient and cost-effective request handling.",
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     description: "Ride-sharing application with real-time tracking and matchmaking.",
     tags: ["Next.js", "Supabase"],
     color: "#FF3366",
-    image: "/Rideshare.png",
+    image: "/rideshare.png",
     details: [
       "Developed a ride-sharing application to connect users with drivers for cost-effective transportation.",
       "Implemented real-time ride booking, driver matching, and location tracking features.",
