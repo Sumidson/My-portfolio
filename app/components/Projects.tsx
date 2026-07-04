@@ -8,79 +8,96 @@ import { projects } from "../data/projects";
 import ScrollReveal, { StaggerContainer, StaggerItem } from "./ScrollReveal";
 
 export default function Projects() {
+  const sectionRef = useRef<HTMLElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsActive(entry.isIntersecting),
+      { rootMargin: "100px" }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isActive || hoveredProject === null) return;
+
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
+    let x = 0;
+    let y = 0;
+
+    const updatePosition = () => {
+      cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+      rafRef.current = null;
+    };
+
     const moveCursor = (e: MouseEvent) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      x = e.clientX;
+      y = e.clientY;
+      if (rafRef.current === null) {
+        rafRef.current = requestAnimationFrame(updatePosition);
       }
     };
 
-    window.addEventListener("mousemove", moveCursor);
-    return () => window.removeEventListener("mousemove", moveCursor);
-  }, []);
+    window.addEventListener("mousemove", moveCursor, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, [isActive, hoveredProject]);
+
+  const activeProject =
+    hoveredProject !== null ? projects[hoveredProject] : null;
 
   return (
-    <section id="projects" className="section relative">
-      {/* Floating Image Cursor Effect */}
+    <section id="projects" className="section relative" ref={sectionRef}>
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 w-[450px] h-[320px] pointer-events-none z-40 -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden transition-all duration-500 ease-out flex items-center justify-center mix-blend-normal"
-        style={{ opacity: hoveredProject !== null ? 1 : 0 }}
+        className="fixed top-0 left-0 w-[450px] h-[320px] pointer-events-none z-40 rounded-2xl overflow-hidden transition-opacity duration-300 ease-out will-change-transform"
+        style={{ opacity: activeProject ? 1 : 0 }}
+        aria-hidden="true"
       >
-        {projects.map((p, i) => (
-          <div
-            key={`glow-${i}`}
-            className="absolute inset-0 transition-transform duration-700 ease-out z-0"
-            style={{
-              background: `radial-gradient(circle at center, ${p.color} 0%, transparent 70%)`,
-              opacity: hoveredProject === i ? 0.8 : 0,
-              transform:
-                hoveredProject === i
-                  ? "scale(1.2)"
-                  : "scale(0.8) translateY(20px)",
-              filter: "blur(40px)",
-            }}
-          />
-        ))}
-
-        {projects.map((p, i) => (
-          <div
-            key={`img-${i}`}
-            className="absolute inset-2 z-10 rounded-xl overflow-hidden shadow-2xl transition-all duration-700 ease-out bg-black"
-            style={{
-              opacity: hoveredProject === i ? 1 : 0,
-              transform:
-                hoveredProject === i
-                  ? "scale(1) rotate(-2deg)"
-                  : "scale(0.8) rotate(5deg) translateY(20px)",
-            }}
-          >
-            <Image
-              src={p.image}
-              alt={p.title}
-              fill
-              className="object-cover opacity-80"
-              sizes="450px"
-              priority
+        {activeProject && (
+          <>
+            <div
+              className="absolute inset-0 z-0 scale-110"
+              style={{
+                background: `radial-gradient(circle at center, ${activeProject.color} 0%, transparent 70%)`,
+                opacity: 0.6,
+              }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-              <span className="text-white font-bold text-xl drop-shadow-md">
-                {p.title}
-              </span>
-              <span className="text-xs text-white/80 uppercase tracking-widest">
-                {p.category}
-              </span>
+            <div className="absolute inset-2 z-10 rounded-xl overflow-hidden shadow-2xl bg-black">
+              <Image
+                src={activeProject.image}
+                alt={activeProject.title}
+                fill
+                className="object-cover opacity-80"
+                sizes="450px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                <span className="text-white font-bold text-xl drop-shadow-md">
+                  {activeProject.title}
+                </span>
+                <span className="text-xs text-white/80 uppercase tracking-widest">
+                  {activeProject.category}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          </>
+        )}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-10">
-        {/* Header */}
         <ScrollReveal className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <span className="section-label">Portfolio</span>
@@ -94,7 +111,6 @@ export default function Projects() {
           </p>
         </ScrollReveal>
 
-        {/* Projects List */}
         <StaggerContainer
           className="space-y-0 relative z-10"
           staggerDelay={0.08}
@@ -128,8 +144,7 @@ export default function Projects() {
                           hoveredProject === i
                             ? `1px ${p.color}`
                             : "0px transparent",
-                        color:
-                          hoveredProject === i ? "transparent" : "white",
+                        color: hoveredProject === i ? "transparent" : "white",
                       }}
                     >
                       {p.title}
