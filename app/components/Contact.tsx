@@ -173,7 +173,7 @@ export default function Contact() {
                 className="flex items-center gap-2 text-xl md:text-2xl text-white hover:text-[var(--accent)] transition-colors duration-500 font-light"
               >
                 <Phone size={16} className="opacity-40" />
-                +91 97619 87576
+
               </a>
             </div>
 
