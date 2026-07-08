@@ -163,17 +163,17 @@ export default function Contact() {
                 Contact Info
               </p>
               <a
-                href="mailto:henrysumidson1@gmail.com"
+                href="mailto:sumidsonshenry@gmail.com"
                 className="block text-xl md:text-2xl text-white hover:text-[var(--accent)] transition-colors duration-500 font-light mb-2"
               >
-                henrysumidson1@gmail.com
+                sumidsonshenry@gmail.com
               </a>
               <a
                 href="tel:+919761987576"
                 className="flex items-center gap-2 text-xl md:text-2xl text-white hover:text-[var(--accent)] transition-colors duration-500 font-light"
               >
                 <Phone size={16} className="opacity-40" />
-                +91 97619 87576
+                +91 9761987576
               </a>
             </div>
 

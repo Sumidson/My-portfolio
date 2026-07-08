@@ -5,38 +5,39 @@ import ScrollReveal, { StaggerContainer, StaggerItem } from "./ScrollReveal";
 
 const skillCategories = [
   {
-    title: "Frontend",
+    title: "Languages & Frontend",
     skills: [
       { name: "React / Next.js", level: 95 },
-      { name: "HTML / CSS", level: 90 },
-      { name: "Tailwind CSS", level: 85 },
+      { name: "JavaScript / TypeScript", level: 93 },
       { name: "React Native", level: 80 },
+      { name: "HTML5 / CSS3 / Tailwind", level: 90 },
     ],
   },
   {
-    title: "Backend & Cloud",
+    title: "Backend & Databases",
     skills: [
-      { name: "AWS", level: 85 },
-      { name: "Google Cloud (GCP)", level: 80 },
-      { name: "Serverless (Lambda)", level: 85 },
-      { name: "DynamoDB", level: 80 },
-      { name: "Supabase", level: 80 },
+      { name: "Node.js / Express.js", level: 88 },
+      { name: "REST APIs & Lambda", level: 85 },
+      { name: "PostgreSQL & Supabase", level: 80 },
+      { name: "DynamoDB & AWS Cloud", level: 82 },
     ],
   },
   {
-    title: "Marketing & Tools",
+    title: "Tools & Core Concepts",
     skills: [
-      { name: "Marketing", level: 90 },
-      { name: "Digital Campaigns", level: 85 },
-      { name: "Git / GitHub", level: 88 },
-      { name: "Figma", level: 85 },
+      { name: "Git / GitHub / VS Code", level: 90 },
+      { name: "Figma / UI/UX Design", level: 85 },
+      { name: "Postman / Vercel", level: 88 },
+      { name: "DSA / OOP / DBMS", level: 82 },
     ],
   },
 ];
 
 const techStack = [
-  "React", "Next.js", "HTML", "CSS", "AWS", "Marketing",
-  "DynamoDB", "GCP", "Supabase", "React Native", "Tailwind CSS"
+  "React", "Next.js", "TypeScript", "JavaScript", "Python", "Java", "C++", "SQL",
+  "HTML5", "CSS3", "Tailwind CSS", "Bootstrap", "Node.js", "Express.js", "REST APIs",
+  "AWS Lambda", "AWS Cognito", "DynamoDB", "PostgreSQL", "Supabase", "Git", "GitHub",
+  "Figma", "Postman", "Vercel", "UI/UX", "Data Structures", "OOP"
 ];
 
 export default function Skills() {

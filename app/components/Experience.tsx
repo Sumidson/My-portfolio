@@ -6,18 +6,18 @@ import { Briefcase } from "lucide-react";
 
 const experiences = [
   {
-    period: "Sept 2025 — Present",
-    role: "Frontend Developer",
-    company: "ElevenX",
+    period: "Sep 2025 — May 2026",
+    role: "Full Stack Developer",
+    company: "ElevenX AI",
     description:
-      "Developed and maintained responsive web applications using modern Frontend technologies such as React, Next.js, and Tailwind CSS. Built reusable UI components and optimized website performance for overall user engagement.",
+      "Developed responsive business web applications using Next.js, React.js, and modern frontend technologies. Collaborated with designers and backend teams to implement scalable, pixel-perfect, and cross-browser compatible interfaces. Optimized performance through component-based architecture and integrated REST APIs to build end-to-end digital solutions.",
   },
   {
-    period: "Feb 2025 — Aug 2026",
-    role: "Marketing Lead",
-    company: "EzLearn",
+    period: "Feb 2025 — Aug 2025",
+    role: "Marketing Lead Intern",
+    company: "Ez Learn",
     description:
-      "Led marketing initiatives, planned digital marketing campaigns, and analyzed performance to drive brand awareness and user acquisition. Collaborated with cross-functional teams.",
+      "Led digital marketing campaigns across social media to increase brand visibility and drive user engagement. Collaborated with cross-functional teams to execute marketing strategies and promotional campaigns. Analyzed metrics to optimize content strategy and audience reach, while coordinating with creators to deliver consistent brand messaging.",
   },
 ];
 
