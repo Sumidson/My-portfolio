@@ -155,6 +155,25 @@ export default function ProjectDetail() {
                 <p className="text-sm text-white/80">{project.category}</p>
               </div>
             </ScrollReveal>
+
+            {project.liveUrl && (
+              <ScrollReveal delay={0.45}>
+                <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-md">
+                  <h3 className="text-sm font-semibold uppercase tracking-widest text-white/40 mb-4">
+                    Website
+                  </h3>
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-[var(--accent)] hover:text-white transition-colors duration-300 font-semibold"
+                  >
+                    <span>Visit Live Site</span>
+                    <ExternalLink size={14} />
+                  </a>
+                </div>
+              </ScrollReveal>
+            )}
           </aside>
         </div>
       </main>
