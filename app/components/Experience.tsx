@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import ScrollReveal, { StaggerContainer, StaggerItem } from "./ScrollReveal";
-import { Briefcase } from "lucide-react";
+import { Briefcase, Download } from "lucide-react";
 
 const experiences = [
   {
@@ -18,6 +18,10 @@ const experiences = [
     company: "Ez Learn",
     description:
       "Led digital marketing campaigns across social media to increase brand visibility and drive user engagement. Collaborated with cross-functional teams to execute marketing strategies and promotional campaigns. Analyzed metrics to optimize content strategy and audience reach, while coordinating with creators to deliver consistent brand messaging.",
+    attachment: {
+      label: "Offer Letter",
+      url: "/Ez Learn Offer Letter.pdf",
+    },
   },
 ];
 
@@ -69,6 +73,18 @@ export default function Experience() {
                     <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                       {exp.description}
                     </p>
+                    {exp.attachment && (
+                      <a
+                        href={exp.attachment.url}
+                        download
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-black/20 dark:bg-white/5 border border-[var(--border-subtle)] text-sm text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-300 backdrop-blur-sm"
+                      >
+                        <Download size={14} />
+                        {exp.attachment.label}
+                      </a>
+                    )}
                   </div>
                 </div>
               </motion.div>
