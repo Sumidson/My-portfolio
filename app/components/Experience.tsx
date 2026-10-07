@@ -1,8 +1,9 @@
+'tsx'
 "use client";
 
 import { motion } from "framer-motion";
 import ScrollReveal, { StaggerContainer, StaggerItem } from "./ScrollReveal";
-import { Briefcase, Download } from "lucide-react";
+import { Briefcase, Download, FileText, ExternalLink } from "lucide-react";
 
 const experiences = [
   {
@@ -21,6 +22,18 @@ const experiences = [
     attachment: {
       label: "Offer Letter",
       url: "/Ez Learn Offer Letter.pdf",
+    },
+  },
+  {
+    period: "SoCTA 2025",
+    role: "Research Publication",
+    company: "Springer Proceedings",
+    description:
+      'Co-authored the research paper “Comparative Life Cycle Assessment of HDDs vs SSDs: Energy Efficiency and Carbon Footprint in Data-Centric Workloads,” exploring energy efficiency, environmental impact, and carbon footprint across the life cycles of HDDs and SSDs in data-centric and cloud-driven workloads. The research was presented at the 10th International Conference on Soft Computing: Theories and Applications (SoCTA 2025) and subsequently published in the Springer conference proceedings.',
+    attachment: {
+      label: "Read Published Paper",
+      url: "https://lnkd.in/gYRX-WkD",
+      external: true,
     },
   },
 ];
@@ -50,7 +63,11 @@ export default function Experience() {
                   {/* Period */}
                   <div className="md:col-span-3">
                     <span className="text-sm text-[var(--text-tertiary)] font-mono transition-colors duration-700 group-hover:text-[var(--accent)] flex items-center gap-2">
-                      <Briefcase size={14} className="opacity-50" />
+                      {exp.role === "Research Publication" ? (
+                        <FileText size={14} className="opacity-50" />
+                      ) : (
+                        <Briefcase size={14} className="opacity-50" />
+                      )}
                       {exp.period}
                     </span>
                   </div>
@@ -63,6 +80,7 @@ export default function Experience() {
                     >
                       {exp.role}
                     </h3>
+
                     <p className="text-[var(--accent)] text-sm mt-1 opacity-70">
                       {exp.company}
                     </p>
@@ -73,15 +91,26 @@ export default function Experience() {
                     <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                       {exp.description}
                     </p>
+
                     {exp.attachment && (
                       <a
                         href={exp.attachment.url}
-                        download
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        {...(exp.attachment.external
+                          ? {
+                              target: "_blank",
+                              rel: "noopener noreferrer",
+                            }
+                          : {
+                              download: true,
+                            })}
                         className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-black/20 dark:bg-white/5 border border-[var(--border-subtle)] text-sm text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-300 backdrop-blur-sm"
                       >
-                        <Download size={14} />
+                        {exp.attachment.external ? (
+                          <ExternalLink size={14} />
+                        ) : (
+                          <Download size={14} />
+                        )}
+
                         {exp.attachment.label}
                       </a>
                     )}
@@ -95,3 +124,4 @@ export default function Experience() {
     </section>
   );
 }
+
